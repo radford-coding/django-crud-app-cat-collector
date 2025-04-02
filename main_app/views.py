@@ -28,4 +28,5 @@ def cat_detail(request, cat_id):
 class CatCreate(CreateView):
     model = Cat
     fields = '__all__'
-    # fields = ['name', 'breed', 'description', 'age']
+    # fields = ['name', 'breed', 'description', 'age'] # other option for only showing certain model fields in the form
+    # success_url = '/cats/' # unnecessary once the Cat model has a get_absolute_url method
