@@ -1,6 +1,6 @@
 from django.shortcuts import render # type: ignore
 # from django.http import HttpResponse # type: ignore
-from django.views.generic.edit import CreateView # type: ignore
+from django.views.generic.edit import CreateView, UpdateView, DeleteView # type: ignore
 from .models import Cat
 
 # Create your views here.
@@ -30,3 +30,11 @@ class CatCreate(CreateView):
     fields = '__all__'
     # fields = ['name', 'breed', 'description', 'age'] # other option for only showing certain model fields in the form
     # success_url = '/cats/' # unnecessary once the Cat model has a get_absolute_url method
+
+class CatUpdate(UpdateView):
+    model = Cat
+    fields = ['breed', 'description', 'age'] # disallows renaming by excluding it
+
+class CatDelete(DeleteView):
+    model = Cat
+    success_url = '/cats/' # need to redirect since that cat won't exist anymore
