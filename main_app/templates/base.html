@@ -9,26 +9,33 @@
     <link rel="shortcut icon" type="image/png" href="{% static 'images/splash.svg' %}" />
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
     <title>Cat Collector</title>
-    {% block head %} 
+    {% block head %}
+
     {% endblock %}
   </head>
   <body>
     <header>
       <div class="header-logo-container">
-        <a href="/">
-          <img src="{% static 'images/header-logo.svg' %}" alt="The Cat Collector Logo" alt="The Cat Collector Logo" />
-        </a>
+        <a href="/"><img src="{% static 'images/header-logo.svg' %}" alt="The Cat Collector Logo" alt="The Cat Collector Logo" /></a>
       </div>
       <nav>
         <ul>
-            <li><a href="{% url 'cat-index' %}">All Cats</a></li>
-          <li><a href="{% url 'about' %}">About</a></li>
+          <li>
+            <a href="{% url 'cat-index' %}">All Cats</a>
+          </li>
+          <li>
+            <a href="{% url 'cat-create' %}">Add a Cat</a>
+          </li>
+          <li>
+            <a href="{% url 'about' %}">About</a>
+          </li>
         </ul>
       </nav>
     </header>
     <main>
-     {% block content %} 
-     {% endblock %}
-     </main>
+      {% block content %}
+
+      {% endblock %}
+    </main>
   </body>
 </html>
