@@ -1,6 +1,8 @@
-from django.urls import path # type: ignore
+from django.urls import path  # type: ignore
 from . import views
 
+# cat_id for function views
+# pk for CBVs
 urlpatterns = [
     path('', views.home, name='home'),
     path('about/', views.about, name='about'),
@@ -9,4 +11,8 @@ urlpatterns = [
     path('cats/create/', views.CatCreate.as_view(), name='cat-create'),
     path('cats/<int:pk>/update/', views.CatUpdate.as_view(), name='cat-update'),
     path('cats/<int:pk>/delete/', views.CatDelete.as_view(), name='cat-delete'),
+    path('cats/<int:cat_id>/add-feeding/', views.add_feeding, name='add-feeding'),
+    path('toys/create/', views.ToyCreate.as_view(), name='toy-create'),
+    path('toys/<int:pk>/', views.ToyDetail.as_view(), name='toy-detail'),
+    path('toys/', views.ToyList.as_view(), name='toy-index'),
 ]
