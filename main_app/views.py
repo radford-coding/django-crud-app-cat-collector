@@ -23,12 +23,13 @@ def cat_index(request):
 
 def cat_detail(request, cat_id):
     cat = Cat.objects.get(id=cat_id)
-    toys = Toy.objects.all()
+    # toys = Toy.objects.all()
+    toys_not_associated = Toy.objects.exclude(id__in = cat.toys.all().values_list('id'))
     feeding_form = FeedingForm()  # instantiate FeedingForm for rendering
     return render(request, 'cats/detail.html', {
         'cat': cat,
         'feeding_form': feeding_form,
-        'toys': toys,
+        'toys': toys_not_associated,
     })
 
 # lesson pivots to class-based views
@@ -76,3 +77,11 @@ class ToyUpdate(UpdateView):
 class ToyDelete(DeleteView):
     model = Toy
     success_url = '/toys/'
+
+def associate_toy(request, cat_id, toy_id):
+    Cat.objects.get(id=cat_id).toys.add(toy_id)
+    return redirect('cat-detail', cat_id=cat_id)
+
+def remove_toy(request, cat_id, toy_id):
+    Cat.objects.get(id=cat_id).toys.remove(toy_id)
+    return redirect('cat-detail', cat_id=cat_id)
