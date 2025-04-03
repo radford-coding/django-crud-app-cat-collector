@@ -2,6 +2,7 @@ from django.shortcuts import render # type: ignore
 # from django.http import HttpResponse # type: ignore
 from django.views.generic.edit import CreateView, UpdateView, DeleteView # type: ignore
 from .models import Cat
+from .forms import FeedingForm
 
 # Create your views here.
 
@@ -21,7 +22,11 @@ def cat_index(request):
 
 def cat_detail(request, cat_id):
     cat = Cat.objects.get(id=cat_id)
-    return render(request, 'cats/detail.html', {'cat': cat})
+    feeding_form = FeedingForm() # instantiate FeedingForm for rendering
+    return render(request, 'cats/detail.html', {
+        'cat': cat,
+        'feeding_form': feeding_form
+        })
 
 # lesson pivots to class-based views
 
