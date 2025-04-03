@@ -140,6 +140,10 @@
     padding: 3px;
 }
 
+.subsection-content input[type="date"] {
+    color-scheme: dark;
+}
+
 .feedings table {
     width: calc(100% - 16px);
     text-align: left;

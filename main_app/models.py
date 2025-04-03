@@ -1,5 +1,6 @@
 from django.db import models # type: ignore
 from django.urls import reverse # type: ignore
+# from django.db.models import Case, Value, When # type: ignore
 
 MEALS = (
     ('B', 'Breakfast'),
@@ -8,12 +9,22 @@ MEALS = (
 )
 
 # Create your models here.
+class Toy(models.Model):
+    name = models.CharField(max_length=50)
+    color = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
+    
+    def get_absolute_url(self):
+        return reverse('toy-detail', kwargs={'pk': self.id})
 
 class Cat(models.Model):
     name = models.CharField(max_length=100)
     breed = models.CharField(max_length=100)
     description = models.TextField(max_length=100)
     age = models.IntegerField()
+    toys = models.ManyToManyField(Toy)
 
     def __str__(self):
         return f'{self.name} ({self.id})' # id is given by Django as unique row in db
@@ -36,15 +47,8 @@ class Feeding(models.Model):
         # django provides the .get_ATTR_display() for CBV model ATTRibutes with predefined choices
     
     class Meta:
-        ordering = ['-date', models.F('meal').asc()] # make newest feedings appear first
+        ordering = ['-date'] # make newest feedings appear first
+        # SQL: ... ORDER BY CASE 'B' THEN 1, CASE 'L' THEN 2, CASE 'D' THEN 3, ELSE 4
 
-class Toy(models.Model):
-    name = models.CharField(max_length=50)
-    color = models.CharField(max_length=20)
 
-    def __str__(self):
-        return self.name
-    
-    def get_absolute_url(self):
-        return reverse('toy-detail', kwargs={'pk': self.id})
     

@@ -17,16 +17,18 @@ def about(request):
 
 
 def cat_index(request):
-    cats = Cat.objects.all()
+    cats = Cat.objects.all().order_by('name')
     return render(request, 'cats/index.html', {'cats': cats})
 
 
 def cat_detail(request, cat_id):
     cat = Cat.objects.get(id=cat_id)
+    toys = Toy.objects.all()
     feeding_form = FeedingForm()  # instantiate FeedingForm for rendering
     return render(request, 'cats/detail.html', {
         'cat': cat,
-        'feeding_form': feeding_form
+        'feeding_form': feeding_form,
+        'toys': toys,
     })
 
 # lesson pivots to class-based views
@@ -34,7 +36,7 @@ def cat_detail(request, cat_id):
 
 class CatCreate(CreateView):
     model = Cat
-    fields = '__all__'
+    fields = ['name', 'breed', 'description', 'age']
     # fields = ['name', 'breed', 'description', 'age'] # other option for only showing certain model fields in the form
     # success_url = '/cats/' # unnecessary once the Cat model has a get_absolute_url method
 
