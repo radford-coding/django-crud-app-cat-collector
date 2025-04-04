@@ -2,14 +2,19 @@ from django.shortcuts import render, redirect  # type: ignore
 # from django.http import HttpResponse # type: ignore
 from django.views.generic.edit import CreateView, UpdateView, DeleteView  # type: ignore
 from django.views.generic import ListView, DetailView  # type: ignore
+from django.contrib.auth.views import LoginView # type: ignore
 from .models import Cat, Toy
 from .forms import FeedingForm
 
 # Create your views here.
 
+# old function-based homepage view
+# def home(request):
+#     return render(request, 'home.html')
 
-def home(request):
-    return render(request, 'home.html')
+# new CBV homepage
+class Home(LoginView):
+    template_name = 'home.html'
 
 
 def about(request):
