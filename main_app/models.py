@@ -1,6 +1,7 @@
 from django.db import models # type: ignore
 from django.urls import reverse # type: ignore
 # from django.db.models import Case, Value, When # type: ignore
+from django.contrib.auth.models import User # type: ignore
 
 MEALS = (
     ('B', 'Breakfast'),
@@ -25,6 +26,7 @@ class Cat(models.Model):
     description = models.TextField(max_length=100)
     age = models.IntegerField()
     toys = models.ManyToManyField(Toy)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.name} ({self.id})' # id is given by Django as unique row in db
