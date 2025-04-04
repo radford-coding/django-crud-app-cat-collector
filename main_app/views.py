@@ -43,8 +43,12 @@ def cat_detail(request, cat_id):
 class CatCreate(CreateView):
     model = Cat
     fields = ['name', 'breed', 'description', 'age']
-    # fields = ['name', 'breed', 'description', 'age'] # other option for only showing certain model fields in the form
     # success_url = '/cats/' # unnecessary once the Cat model has a get_absolute_url method
+
+    # this inherited method is called when a valid cat form is submitted
+    def form_valid(self, form):
+        form.instance.user = self.request.user # aka cat.user = self.request.user
+        return super().form_valid(form) # calls inherited method, plus the behavior we defined on the previous line - not recursive
 
 
 class CatUpdate(UpdateView):
